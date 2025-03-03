@@ -1,11 +1,17 @@
 from invoke import task
+from ai2thor.controller import Controller
+from PIL import Image
+import numpy as np
+import json
+import shutil
+import random
+import os
+from typing import Optional, Set
+import json
+from collections import Counter, defaultdict
+from ai2thor.controller import Controller
 
-ASSET_DATABASE_PATH = "procthor/databases/asset-database.json"
-MATERIAL_DATABASE_PATH = "procthor/databases/material-database.json"
-ASSET_IMAGE_SIZE = 450
 
-#%% Utils
-@task
 def set_version(c, version):
     """Writes the version upon a release."""
     for filename in ["setup.py", "procthor/__init__.py"]:
@@ -15,17 +21,27 @@ def set_version(c, version):
         with open(filename, "w") as f:
             f.write(file)
 
+ASSET_DATABASE_PATH = "procthor/databases/asset-database.json"
+MATERIAL_DATABASE_PATH = "procthor/databases/material-database.json"
+PLACEMENT_ANNOTATIONS_PATH = "procthor/databases/placement-annotations.json"
+AI2THOR_OBJECT_METADATA_PATH = "procthor/databases/ai2thor-object-metadata.json"
+ASSET_IMAGE_SIZE = 450
 
-'''
-from ai2thor.controller import Controller
-from PIL import Image
-import numpy as np
+with open(ASSET_DATABASE_PATH, "r") as f:
+    ASSET_DATABASE = json.load(f)
 
-from houses.constants import PROCTHOR_INITIALIZATION
-from houses.databases import ASSET_DATABASE, MATERIAL_DATABASE, PLACEMENT_ANNOTATIONS
+with open(MATERIAL_DATABASE_PATH, "r") as f:
+    MATERIAL_DATABASE = json.load(f)
+
+with open(AI2THOR_OBJECT_METADATA_PATH, "r") as f:
+    AI2THOR_OBJECT_METADATA = json.load(f)
+
+with open(PLACEMENT_ANNOTATIONS_PATH, "r") as f:
+    PLACEMENT_ANNOTATIONS = json.load(f)
+
+from procthor.constants import PROCTHOR_INITIALIZATION
 
 
-#%% Material Database
 def reset_material_database():
     controller = Controller(**PROCTHOR_INITIALIZATION)
     update_material_database(controller)
@@ -70,7 +86,6 @@ def update_material_visualizations():
     shutil.make_archive("materials", "zip", "materials")
 
 
-#%% Asset Database
 def reset_asset_database():
     controller = Controller(**PROCTHOR_INITIALIZATION)
 
@@ -472,7 +487,7 @@ if __name__ == "__main__":
     set_object_states(controller)
 
 
-#%%
+
 def save_ai2thor_object_metadata():
     """Save the starting object metadata in each AI2-THOR scene."""
     controller = Controller(**PROCTHOR_INITIALIZATION)
@@ -499,7 +514,7 @@ def save_ai2thor_object_metadata():
         f.write(json.dumps(out, indent=4, sort_keys=True))
 
 
-#%%
+
 def assign_object_groups():
     placeable_object_types = PLACEMENT_ANNOTATIONS[
         (
@@ -521,14 +536,6 @@ def assign_object_groups():
     }
     with open("procthor/databases/object-groups.json", "w") as f:
         f.write(json.dumps(object_groups, indent=4, sort_keys=True))
-
-
-import json
-from collections import Counter, defaultdict
-
-#%%
-from houses.databases import AI2THOR_OBJECT_METADATA, PLACEMENT_ANNOTATIONS
-
 
 def save_receptacles():
     used_asset_types = set(PLACEMENT_ANNOTATIONS.index)
@@ -596,13 +603,6 @@ def save_receptacles():
 
 
 def set_wall_holes():
-    import json
-
-    from ai2thor.controller import Controller
-
-    from houses.constants import PROCTHOR_INITIALIZATION
-    from houses.databases import ASSET_DATABASE
-
     controller = Controller(**PROCTHOR_INITIALIZATION)
 
     window_ids = [obj["assetId"] for obj in ASSET_DATABASE["Window"]]
@@ -616,4 +616,3 @@ def set_wall_holes():
 
     with open("procthor/databases/wall-holes.json", "w") as f:
         f.write(json.dumps(out, indent=4, sort_keys=True))
-'''
