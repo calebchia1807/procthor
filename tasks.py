@@ -11,16 +11,6 @@ import json
 from collections import Counter, defaultdict
 from ai2thor.controller import Controller
 
-
-def set_version(c, version):
-    """Writes the version upon a release."""
-    for filename in ["setup.py", "procthor/__init__.py"]:
-        with open(filename, "r") as f:
-            file = f.read()
-        file = file.replace("<REPLACE_WITH_VERSION>", version)
-        with open(filename, "w") as f:
-            f.write(file)
-
 ASSET_DATABASE_PATH = "procthor/databases/asset-database.json"
 MATERIAL_DATABASE_PATH = "procthor/databases/material-database.json"
 PLACEMENT_ANNOTATIONS_PATH = "procthor/databases/placement-annotations.json"
