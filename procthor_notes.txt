@@ -6,7 +6,7 @@ git clone https://github.com/allenai/procthor.git
 cd procthor/scripts
 conda create --name procthor python=3.10.12
 conda activate procthor
-pip install procthor ai2thor==2.5 attrs pandas shapely moviepy==1.0.3 networkx python-fcl scipy invoke
+pip install procthor ai2thor==2.4.22 attrs pandas shapely moviepy==1.0.3 networkx python-fcl scipy invoke
 
 
 export PYTHONPATH=$PYTHONPATH:$PWD
