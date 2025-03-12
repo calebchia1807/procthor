@@ -10,7 +10,7 @@ pip install procthor ai2thor==2.4.22 attrs pandas shapely moviepy==1.0.3 network
 pip3 install --extra-index-url https://ai2thor-pypi.allenai.org ai2thor==0+8524eadda94df0ab2dbb2ef5a577e4d37c712897
 
 export PYTHONPATH=$PYTHONPATH:$PWD
-python example.py	-> RUN PROCTHOR!
+python example.py	-> to generate the env first
 
 ** after generation, need to upgrade the .json, run the following in ~/procthor/scripts:
     python3 upgrade_house.py temp.json output.json
