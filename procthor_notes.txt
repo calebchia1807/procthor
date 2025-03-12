@@ -6,7 +6,7 @@ git clone https://github.com/allenai/procthor.git
 cd procthor/scripts
 conda create --name procthor python=3.10.12
 conda activate procthor
-pip install procthor ai2thor==2.4.22 attrs pandas shapely moviepy==1.0.3 networkx python-fcl scipy invoke torch torchvision compress_json
+pip install procthor attrs pandas shapely moviepy==1.0.3 networkx python-fcl scipy invoke torch torchvision compress_json
 pip3 install --extra-index-url https://ai2thor-pypi.allenai.org ai2thor==0+8524eadda94df0ab2dbb2ef5a577e4d37c712897
 
 export PYTHONPATH=$PYTHONPATH:$PWD
@@ -18,5 +18,4 @@ python example.py	-> to generate the env first
 
 ----------------------------------------------------------------------------------
 ** UPDATE CONSTANTS.PY
-PROCTHOR_INITIALIZATION = dict(branch="391b3fae4d4cc026f1522e5acf60953560235971", scene="Procedural")
-
+PROCTHOR_INITIALIZATION = dict(branch="nanna", scene="Procedural")
