@@ -12,6 +12,9 @@ pip3 install --extra-index-url https://ai2thor-pypi.allenai.org ai2thor==0+8524e
 export PYTHONPATH=$PYTHONPATH:$PWD
 python example.py	-> RUN PROCTHOR!
 
+** after generation, need to upgrade the .json, run the following in ~/procthor/scripts:
+    python3 upgrade_house.py temp.json output.json
+    >> to find out what does upgrade_house.py do, run: python3 upgrade_house.py -h
 
 ----------------------------------------------------------------------------------
 ** UPDATE CONSTANTS.PY
