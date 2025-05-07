@@ -8,21 +8,51 @@
 
 ProcTHOR procedurally generates interactive, diverse, and semantically plausible houses that are compatible with AI2-THOR.
 
-## Example
 
-Install `procthor` with PyPi:
+## Requirements
+- Ubuntu 20.04 (Unity 2020.3.25f1 only runs on this Ubuntu version)
+- Conda Environment
+
+## To generate the example scene
+Run the following code will generate the initial .json file:
 ```bash
-pip install procthor
+git clone https://github.com/allenai/procthor.git
+cd procthor/scripts
+conda create --name procthor python=3.10.12
+conda activate procthor
+pip3 install procthor attrs pandas shapely moviepy==1.0.3 networkx python-fcl scipy invoke torch torchvision compress_json
+pip3 install --extra-index-url https://ai2thor-pypi.allenai.org ai2thor==0+8524eadda94df0ab2dbb2ef5a577e4d37c712897
+export PYTHONPATH=~/Desktop/procthor
+python example.py
 ```
 
-And then run the example script to generate a new house:
+Run the following to upgrade the .json to make it useable:
 ```bash
-export PYTHONPATH=$PYTHONPATH:$PWD
-python scripts/example.py
+python3 upgrade_house.py temp.json output.json
 ```
+
+## Load the scene in Unity
+1. Install [Unity](https://unity.com/download) and select the editor version `2020.3.25f1`.
+2. Clone [AI2-THOR repository](https://github.com/allenai/ai2thor) and switch to the appropriate AI2-THOR commit.
+```bash
+git clone https://github.com/allenai/ai2thor.git
+git checkout 07445be8e91ddeb5de2915c90935c4aef27a241d
+```
+3. Reinstall some packages:
+```bash
+pip uninstall Werkzeug
+pip uninstall Flask
+pip install Werkzeug==2.0.1
+pip install Flask==2.0.1
+```
+4. Load `ai2thor/unity` as project in Unity and open `ai2thor/unity/Assets/Scenes/Procedural/Procedural.unity`.
+5. In the terminal, run [this python script](connect_to_unity.py):
+```bash
+python connect_to_unity --scene <SCENE_JSON_FILE_PATH>
+```
+6. Press the play button (the triangle) in Unity to load the scene.
 
 ## Citation
-
 This code is used to generate houses for the [ProcTHOR](https://procthor.allenai.org/) paper:
 
 ```bibtex
